@@ -1,0 +1,654 @@
+/* ========================================
+   RESET
+======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =======================================
+   CONFIGURAÇÕES GERAIS
+======================================== */
+html {
+    font-size: 16px;
+}
+
+body {
+    min-height: 100vh;
+    /* Evita problemas com a barra de endereço no celular */
+    min-height: 100dvh; /* 1214px e 1295px tamanho da img*/
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(
+            circle at top,
+            #fff5f8,
+            transparent 20%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(248, 200, 220, 0.85),
+            rgba(216, 180, 254, 0.85)
+        ),
+        url("./imgs_gifs/decoracao.png") center / cover no-repeat;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   IMAGEM
+   Nunca passa da largura do cartão
+======================================== */
+#img {
+    display: block;
+    width: min(300px, 100%);
+    height: auto;
+    margin: 0 auto;
+}
+
+/* ========================================
+   CARTÃO DO CONVITE
+======================================== */
+#convite {
+    position: relative;
+    width: 100%;
+    max-width: 550px;
+    padding: clamp(30px, 6vw, 55px);
+    text-align: center;
+    background:
+        linear-gradient(
+            160deg,
+            rgba(255, 251, 230, 0.88),
+            rgba(241, 249, 232, 0.88)
+        ),
+        url("./imgs_gifs/fundo-convite.png") center / cover no-repeat;
+    border: 1px solid rgba(76, 175, 80, 0.35);
+    border-radius: clamp(20px, 5vw, 30px);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.15),
+        0 0 30px rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+    animation:
+        aparecer 1.2s ease,
+        brilharConvite 3.5s ease-in-out infinite;
+}
+
+/* ========================================
+   EFEITO DO CARTÃO NO PC
+======================================== */
+@media (hover: hover) {
+    #convite:hover {
+        transform: translateY(-6px);
+        box-shadow:
+            0 28px 60px rgba(0, 0, 0, 0.18),
+            0 0 40px rgba(46, 125, 50, 0.3);
+    }
+}
+
+/* ========================================
+   EFEITO DO CARTÃO AO TOCAR
+======================================== */
+#convite:active {
+    transform: scale(0.99);
+}
+
+/* ========================================
+   TÍTULO PRINCIPAL
+======================================== */
+#convite h1 {
+    margin-bottom: 20px;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    line-height: 1.2;
+    color: #c0392b;
+    text-shadow: 0 3px 10px rgba(192, 57, 43, 0.2);
+    animation: flutuar 3s ease-in-out infinite;
+}
+
+/* ========================================
+   NOME DO ANIVERSARIANTE
+======================================== */
+#nome-aniversariante {
+    width: 100%;
+    margin: 10px 0 20px;
+    /* O tamanho se adapta ao tamanho da tela */
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    line-height: 1.2;
+    /* Gradiente usado no efeito de brilho */
+    background: linear-gradient(
+        100deg,
+        #c0392b 40%,
+        #ff6b6b 50%,
+        #c0392b 60%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Evita que nomes muito grandes ultrapassem o cartão */
+    overflow-wrap: anywhere;
+    animation:
+        nomeAparecer 0.5s ease,
+        brilharNome 3s linear infinite,
+        flutuar 3s ease-in-out infinite;
+}
+
+/* ========================================
+   FOTO DA ANIVERSARIANTE
+======================================== */
+#foto-wrapper {
+    position: relative;
+    width: fit-content;
+    margin: 5px auto 20px;
+}
+
+#foto-aniversariante {
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: clamp(110px, 30vw, 160px);
+    height: clamp(110px, 30vw, 160px);
+    margin: 0;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 25px rgba(192, 57, 43, 0.35);
+    animation: nomeAparecer 0.6s ease;
+}
+
+/* Ativado via JS quando "Ver informações" é clicado */
+#foto-aniversariante.girando {
+    animation: flutuarGirar 3.5s ease-in-out infinite;
+}
+
+/* Ativado via JS quando "Esconder informações" é clicado */
+#foto-aniversariante.parado {
+    animation: none;
+}
+
+/* ========================================
+   MOLDURA DE MELANCIA AO REDOR DA FOTO
+======================================== */
+.moldura-melancia {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    width: clamp(165px, 46vw, 235px);
+    height: auto;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: girarMoldura 18s linear infinite;
+}
+
+@keyframes girarMoldura {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ========================================
+   ENFEITES AO REDOR DA FOTO
+======================================== */
+.enfeite {
+    position: absolute;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    animation: pulsarEnfeite 2s ease-in-out infinite;
+}
+
+/* Tamanho específico para enfeites que são imagens (ex: estrela.webp) */
+img.enfeite {
+    width: clamp(26px, 7vw, 38px);
+    height: auto;
+}
+
+.enfeite-1 {
+    top: -10px;
+    left: -14px;
+    animation-delay: 0s;
+}
+
+.enfeite-2 {
+    top: -10px;
+    right: -14px;
+    animation-delay: 0.4s;
+}
+
+.enfeite-3 {
+    bottom: -8px;
+    left: -10px;
+    animation-delay: 0.8s;
+}
+
+.enfeite-4 {
+    bottom: -8px;
+    right: -10px;
+    animation-delay: 1.2s;
+}
+
+@keyframes pulsarEnfeite {
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.4) rotate(18deg);
+    }
+}
+
+/* ========================================
+   TEXTOS
+======================================== */
+#convite p {
+    margin: 10px 0;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    line-height: 1.6;
+    color: #555;
+}
+
+/* ========================================
+   MENSAGEM (efeito ao passar o mouse)
+======================================== */
+.mensagem {
+    display: inline-block;
+    position: relative;
+    transition:
+        color 0.35s ease,
+        transform 0.35s ease,
+        letter-spacing 0.35s ease;
+}
+
+/* Sublinhado que desliza da esquerda para a direita */
+.mensagem::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background: #c0392b;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+@media (hover: hover) {
+    .mensagem:hover {
+        color: #c0392b;
+        transform: scale(1.04);
+        letter-spacing: 0.5px;
+    }
+
+    .mensagem:hover::after {
+        transform: scaleX(1);
+    }
+}
+
+/* Coração pulsando, independente do hover */
+.coracao {
+    display: inline-block;
+    animation: pulsarCoracao 1.2s ease-in-out infinite;
+}
+
+@keyframes pulsarCoracao {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+/* ========================================
+   BOTÃO
+======================================== */
+#btnInfo {
+    width: 100%;
+    max-width: 250px;
+    margin-top: 25px;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 50px;
+    background:
+        linear-gradient(
+            135deg,
+            #ff6b6b,
+            #c0392b
+        );
+    color: white;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* Contorno visível para quem navega pelo teclado */
+#btnInfo:focus-visible {
+    outline: 3px solid #c0392b;
+    outline-offset: 3px;
+}
+
+/* ========================================
+   EFEITO DO BOTÃO NO PC
+======================================== */
+@media (hover: hover) {
+    #btnInfo:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(192, 57, 43, 0.4);
+    }
+}
+
+/* ========================================
+   EFEITO AO CLICAR
+======================================== */
+#btnInfo:active {
+    transform: scale(0.95);
+}
+
+/* ========================================
+   ÁREA DE INFORMAÇÕES
+======================================== */
+#informacoes {
+    width: 100%;
+    margin-top: 25px;
+    padding: clamp(15px, 4vw, 25px);
+    border-radius: 20px;
+    background: #f1f9e8;
+    animation: aparecerInfo 0.5s ease;
+}
+
+#informacoes p {
+    margin: 8px 0;
+    color: #3a5a1f;
+}
+
+/* Link do endereço (abre o mapa) */
+#informacoes a {
+    color: #c0392b;
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.3s ease;
+}
+
+#informacoes a:hover {
+    color: #ff6b6b;
+}
+
+#informacoes a:focus-visible {
+    outline: 3px solid #c0392b;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* Botão de confirmar presença (WhatsApp) */
+#informacoes .btn-whatsapp {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    color: #fff;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+#informacoes .btn-whatsapp:hover {
+    color: #fff;
+}
+
+@media (hover: hover) {
+    #informacoes .btn-whatsapp:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(46, 125, 50, 0.4);
+    }
+}
+
+#informacoes .btn-whatsapp:active {
+    transform: scale(0.95);
+}
+
+/* ========================================
+   ANIMAÇÃO DO CARTÃO
+======================================== */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ========================================
+   BRILHO CONTÍNUO DO CARTÃO
+======================================== */
+@keyframes brilharConvite {
+    0%,
+    100% {
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.15),
+            0 0 30px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.15),
+            0 0 45px rgba(192, 57, 43, 0.35);
+    }
+}
+
+/* ========================================
+   ANIMAÇÃO DAS INFORMAÇÕES
+======================================== */
+@keyframes aparecerInfo {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   ANIMAÇÃO DO TÍTULO
+======================================== */
+@keyframes flutuar {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   BRILHO CONTÍNUO DO NOME
+======================================== */
+@keyframes brilharNome {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: -250% 50%;
+    }
+}
+
+/* ========================================
+   ANIMAÇÃO DE GIRO + FLUTUAÇÃO DA FOTO
+======================================== */
+@keyframes flutuarGirar {
+    0% {
+        transform: perspective(800px) translateY(0) rotateY(0deg);
+    }
+    50% {
+        transform: perspective(800px) translateY(-8px) rotateY(180deg);
+    }
+    100% {
+        transform: perspective(800px) translateY(0) rotateY(360deg);
+    }
+}
+
+/* ========================================
+   ANIMAÇÃO DO NOME
+======================================== */
+@keyframes nomeAparecer {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   TELAS PEQUENAS
+   Imagem em cima, cartão embaixo, tudo centralizado
+======================================== */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    #img {
+        width: min(170px, 45vw);
+    }
+}
+
+/* ========================================
+   CELULARES
+======================================== */
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+
+    #convite {
+        padding: 35px 20px;
+    }
+
+    #convite h1 {
+        margin-bottom: 15px;
+    }
+
+    #nome-aniversariante {
+        margin-bottom: 15px;
+    }
+
+    #convite p {
+        line-height: 1.5;
+    }
+
+    #btnInfo {
+        max-width: 100%;
+    }
+}
+
+/* ========================================
+   CELULARES MUITO PEQUENOS
+======================================== */
+@media (max-width: 360px) {
+    body {
+        padding: 8px;
+    }
+
+    #convite {
+        padding: 30px 15px;
+    }
+
+    #convite h1 {
+        font-size: 1.7rem;
+    }
+
+    #nome-aniversariante {
+        font-size: 1.5rem;
+    }
+}
+
+/* ========================================
+   TELAS GRANDES / PC
+======================================== */
+@media (min-width: 1200px) {
+    #convite {
+        max-width: 600px;
+    }
+}
+
+/* ========================================
+   CONFETE CAINDO
+======================================== */
+#confete-container {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.confete {
+    position: absolute;
+    top: -40px;
+    width: var(--tamanho, 10px);
+    height: var(--tamanho, 10px);
+    background: var(--cor, #c0392b);
+    border-radius: var(--formato, 2px);
+    animation: cairConfete var(--duracao, 3s) linear forwards;
+}
+
+@keyframes cairConfete {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--balanco, 40px), 110vh) rotate(var(--giro, 540deg));
+        opacity: 0.9;
+    }
+}
+
+/* ========================================
+   PARA QUEM PREFERE MENOS MOVIMENTO
+======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    #confete-container {
+        display: none;
+    }
+}
